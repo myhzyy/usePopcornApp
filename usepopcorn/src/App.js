@@ -1,5 +1,6 @@
 import Q from "q";
 import { useEffect, useState } from "react";
+import StarRating from "./StarRating";
 
 const tempMovieData = [
   {
@@ -273,6 +274,25 @@ function Movie({ movie, onSelectMovie }) {
 }
 
 function MovieDetails({ selectedId, onCloseMovie }) {
+  const [movie, setMovie] = useState({});
+
+  const {
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating,
+    Plot: plot,
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+  } = movie;
+
+  console.log(title, runtime);
+
+  console.log(title);
+
   useEffect(function () {
     async function getMovieDetails() {
       const res =
@@ -280,19 +300,41 @@ function MovieDetails({ selectedId, onCloseMovie }) {
 `);
 
       const data = await res.json();
-      console.log(data);
+      setMovie(data);
     }
 
     getMovieDetails();
   }, []);
 
+  console.log(movie);
+
   return (
     <div className="details">
-      <button className="bnt-back" onClick={onCloseMovie}>
-        &larr:
-      </button>
+      <header>
+        <button className="bnt-back" onClick={onCloseMovie}>
+          &larr:
+        </button>
 
-      {selectedId}
+        <img src={poster} alt={`Post of ${movie}`} />
+
+        <div className="details-overview">
+          <h2>{title}</h2>
+          <p>{released}</p>
+
+          <p>{genre}</p>
+          <p>
+            <span>⭐️</span>
+            {imdbRating} IMDb rating
+          </p>
+        </div>
+      </header>
+
+      <section>
+        <StarRating />
+        <p>{plot}</p>
+        <p>Starring {actors}</p>
+        <p>Directed by {director}</p>
+      </section>
     </div>
   );
 }
