@@ -318,6 +318,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   /// this will put a find through the watched array
   /// it will find the userRating to movie.imdID is EQUAL to the selected id
   /// and store it in watchedUserRating
+  ////
 
   const {
     Title: title,
